@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  unsafe-crud:
+    container_name: unsafe-crud
+    build:
+      context: ./php
+    depends_on:
+      - db-crud
+    volumes:
+      - ./myapp:/var/www/html
+    ports:
+      - "80:80"
+
+  db-crud:
+    container_name: db-crud
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: unsafe-crud
+      MYSQL_USER: gezzy
+      MYSQL_PASSWORD: gezzy
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-crud:/var/lib/mysql
+
+volumes:
+  db-crud:
+    driver: 'local'
